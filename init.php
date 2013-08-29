@@ -1,7 +1,7 @@
 <?php
-$path = dirname(__FILE__);
 include 'ZENObject.php';
-include 'Router.php';
-include 'Model.php';
-include 'View.php';
-include 'Controller.php';				
+foreach (glob(dirname(__FILE__).'/*.php') as $pathname) {
+    if (!in_array(pathinfo($pathname, PATHINFO_BASENAME),
+        array('ZENObject.php', 'init.php')))
+        include $pathname;
+}
