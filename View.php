@@ -69,6 +69,7 @@ class View extends ZENObject {
             $output = $this->setPlaceholderValues($placeholders, $output, 'themeVariables');
             $output = $this->setPlaceholderValues($placeholders, $output, 'templateVariables');
         } else {
+            if (isset($this->vars['themeVariables']))
             foreach ($this->vars['themeVariables'] as $key => $value)
             	$output .= $value;
         }
