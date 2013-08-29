@@ -1,5 +1,4 @@
 <?php 
-
 class ZENObject {
 	
 	protected $vars = null;
@@ -25,5 +24,3 @@ class ZENObject {
     }
 	
 }
-
-?>

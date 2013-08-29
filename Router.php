@@ -1,16 +1,13 @@
 <?php
-
 class Router extends ZENObject {
 	
-	function __construct() {
+	function __construct($request = null) {
 		$this->delimiter = '/';
+		if (!is_null($request))
+		    $this->main($request);
 	}
 	
-    function run($request = '') {
-    	$this->parse_request($request);
-    }
-    
-    function parse_request($string = null) {
+    function parse($string = null) {
     	$arguments = explode($this->delimiter, $string);
     	$this->arguments = new stdClass();
     	while ($argument = current($arguments)) {
@@ -20,6 +17,9 @@ class Router extends ZENObject {
                 default:
                     if (!isset($this->arguments->$argument)) {
                         $value = next($arguments);
+                        if (!$value)
+                            $value = $argument;
+                        
                         $this->arguments->$argument = $value;
                     }
                     break;
@@ -28,4 +28,7 @@ class Router extends ZENObject {
     	}
     }
     
+    function main($request = '') {
+    	$this->parse($request);
+    }
 }
