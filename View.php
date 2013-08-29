@@ -13,26 +13,28 @@ class View extends ZENObject {
     	return $retval;
     }
     
-    function setPlaceholderValues($placeholders = array(), $retval = '') {
-    	foreach ($placeholders as $key => $placeholder)
-            if ($value = $this->vars['templateVariables'][$key])
+    function setPlaceholderValues($placeholders = array(), $retval = '', $viewKey = 'templateVariables') {
+    	foreach ($placeholders as $key => $placeholder) {
+            if ($value = $this->vars[$viewKey][$key]) {
                 $retval = str_replace($placeholder, $value, $retval);
+            }
+        }
+        return $retval;
+    }
+    
+    function clean($placeholders = array(), $retval = '') {
+        foreach ($placeholders as $key => $placeholder) {
+            $retval = str_replace($placeholder, '', $retval);
+        }
         return $retval;
     }
 
-    function parse($path = null) {
+    function parse($path = null, $placeholderKey) {
         $retval = null;
         $templateContents = file_get_contents($path);
         $placeholders['template'] = $this->getPlaceholders($templateContents);
         $templateContents = $this->setPlaceholderValues($this->getPlaceholders($templateContents), $templateContents);
         $retval = $templateContents;
-        if ($this->theme) {
-            $themePath = current(Spotlight::find($this->theme, $this->templateDirectory));
-            $themeFile = $themePath['fullpath'];
-            $themeContents = file_get_contents($themeFile);
-            $this->assign('BODY', $templateContents);
-            $retval = $this->setPlaceholderValues($this->getPlaceholders($themeContents), $themeContents);
-        }
         return $retval;
     }
 
@@ -53,15 +55,27 @@ class View extends ZENObject {
         }
     }
     
-    function display($template) {
+    function display($template, $placeholder = 'BODY') {
         $templateFile = current(Spotlight::find($template, $this->templateDirectory));
-        $contents = $this->parse($templateFile['fullpath']);
-        if ($this->debug) {
-            echo '<pre>';
-            echo htmlspecialchars($contents);
-            echo '</pre>';
+        $this->vars['themeVariables'][$placeholder] = $this->parse($templateFile['fullpath'], $placeholder);
+    }
+    
+    function render() {
+    	if ($this->theme) {
+            $themePath = current(Spotlight::find($this->theme, $this->templateDirectory));
+            $themeFile = $themePath['fullpath'];
+            $output = file_get_contents($themeFile);
+            $placeholders = $this->getPlaceholders($output);
+            $output = $this->setPlaceholderValues($placeholders, $output, 'themeVariables');
+            $output = $this->setPlaceholderValues($placeholders, $output, 'templateVariables');
         } else {
-            echo $contents;
+            foreach ($this->vars['themeVariables'] as $key => $value)
+            	$output .= $value;
         }
+        
+        if ( ! $this->displayPlaceholders )
+        	$output = $this->clean($this->getPlaceholders($output), $output);
+        if ($output)
+            echo $output;
     }
 }

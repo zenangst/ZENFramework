@@ -24,6 +24,7 @@ if ($controller = current($spotlight)) {
             PATH.'/views'
         );
         $instance->{$router->method}();
+        $instance->view->render();
     }
         
 }
