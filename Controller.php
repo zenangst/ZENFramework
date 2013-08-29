@@ -1,5 +1,4 @@
 <?php
-
 class Controller extends ZENObject {
 	
 	function __construct() {
