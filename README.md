@@ -14,6 +14,7 @@ git clone git://github.com/zenangst/ZENFramework.git
 
 ### Folder Structure
 
+```
 controllers
     - [Add your controllers here]
 framework
@@ -32,5 +33,5 @@ models
     - [Add your models here]
 views
     - [Add your templates here]
-
+```
 
