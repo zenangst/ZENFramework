@@ -84,6 +84,6 @@ class View extends ZENObject {
     
     function setGlobals() {
         if ($this->theme)
-        $this->vars['themeVariables']['THEME'] = strstr(dirname($this->theme), '/');
+        $this->vars['themeVariables']['THEME'] = str_replace('/', '', strstr(dirname($this->theme), '/'));
     }
 }
