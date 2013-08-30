@@ -1,11 +1,11 @@
 # ZENFramework
 
-## This is a MVC Framework built in PHP, it is still a work in progress
+This is a MVC Framework built in PHP, it is still a work in progress
 
 ### Download
-
+```
 git clone git://github.com/zenangst/ZENFramework.git
-
+```
 ### Installation
 
 * Download ZENFramework
