@@ -61,6 +61,7 @@ class View extends ZENObject {
     }
     
     function render() {
+        $output = '';
         $this->setGlobals();
     	if ($this->theme) {
             $themePath = current(Spotlight::find($this->theme, $this->templateDirectory));
@@ -77,9 +78,8 @@ class View extends ZENObject {
         
         if ( ! $this->displayPlaceholders )
         	$output = $this->clean($this->getPlaceholders($output), $output);
-        if ($output) {
-            echo $output;
-        }
+        
+        echo $output;
     }
     
     function setGlobals() {
