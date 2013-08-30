@@ -1,0 +1,6 @@
+Options -Indexes
+RewriteEngine on
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_METHOD} ^(get|post)$ [NC]
+RewriteRule ^ index.php [QSA,L]
