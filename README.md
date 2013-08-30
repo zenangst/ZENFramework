@@ -1,16 +1,18 @@
 # ZENFramework
 
-## Download
+## This is a MVC Framework built in PHP, it is still a work in progress
+
+### Download
 
 git clone git://github.com/zenangst/ZENFramework.git
 
-## Installation
+### Installation
 
 * Download ZENFramework
 * Add Virtual Host to Apache which points to htdocs
 * For local editing, add Virtual Host to /etc/hosts
 
-## Folder Structure
+### Folder Structure
 
 controllers
     - [Add your controllers here]
