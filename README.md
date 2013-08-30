@@ -15,9 +15,9 @@ git clone git://github.com/zenangst/ZENFramework.git
 ### Folder Structure
 
 ```
-controllers
+controllers/
     - [Add your controllers here]
-framework
+framework/
     - Bootstrap.php
     - Controller.php
     - Includes.php
@@ -26,12 +26,12 @@ framework
     - Spotlight.php
     - View.php
     - ZENObject.php
-htdocs
+htdocs/
     - .htaccess
     - index.php
-models
+models/
     - [Add your models here]
-views
+views/
     - [Add your templates here]
 ```
 
