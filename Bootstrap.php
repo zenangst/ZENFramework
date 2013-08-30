@@ -6,12 +6,15 @@ $request = (isset($_SERVER['REQUEST_URI']))
 ? substr($_SERVER['REQUEST_URI'],1) : '' ;   
 $router = new Router($request);
 
-$spotlight = Spotlight::find("{$router->controller}Controller.php", array(
-    0 => PATH.'/controllers'
-));
+if (!$router->controller)
+    $router->controller = "main";
 
 if (!$router->method)
     $router->method = "main";
+
+$spotlight = Spotlight::find("{$router->controller}Controller.php", array(
+    0 => PATH.'/controllers'
+));
 
 if ($controller = current($spotlight)) {
 	if (!class_exists($controller['filename']))

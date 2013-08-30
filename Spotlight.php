@@ -16,8 +16,7 @@ class Spotlight extends ZENObject {
 	    $retval = array();
 	    foreach ($directories as $directory) {
 	    	$filepath = $directory.'/'.$filename;
-	    	if (file_exists($filepath)) {
-	    	    $pathinfo = pathinfo($filepath);
+	    	if ($pathinfo = pathinfo($filepath)) {
 	    	    $pathinfo['fullpath'] = $filepath;
 	    	    $retval = array_merge(array($pathinfo), $retval);
 	    	}
