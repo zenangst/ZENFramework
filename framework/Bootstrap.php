@@ -2,7 +2,7 @@
 if (!defined('PATH'))
     die('You need to define a PATH for your root directory');
 
-define('DEFAULT_CONTROLLER', 'main');
+define('DEFAULT_CONTROLLER', 'Main');
 define('DEFAULT_METHOD', 'main');
 
 // Use raw REQUEST_URI input for parsing request
@@ -10,24 +10,24 @@ $request = (isset($_SERVER['REQUEST_URI']))
 ? substr($_SERVER['REQUEST_URI'],1) : '' ;   
 $router = new Router($request);
 
+// Set default controller
 if (!$router->controller)
     $router->controller = DEFAULT_CONTROLLER;
 
+// Set default method
 if (!$router->method)
     $router->method = DEFAULT_METHOD;
 
-$spotlight = Spotlight::find("{$router->controller}Controller.php", array(
-    0 => PATH.'/controllers'
-));
+$router->controller = ucfirst($router->controller);
+$controllersPath = array( 0 => PATH.'/controllers' );
+$spotlight = Spotlight::find("{$router->controller}Controller.php", $controllersPath);
 
 // If class not found, try using default controller
 if (!$spotlight) {
     // Use first value of arguments as method instead of controller
     $router->method = $router->controller;
     $router->controller = DEFAULT_CONTROLLER;
-    $spotlight = Spotlight::find("{$router->controller}Controller.php", array(
-        0 => PATH.'/controllers'
-    ));
+    $spotlight = Spotlight::find("{$router->controller}Controller.php", $controllersPath);
 }
 
 if ($spotlight) {

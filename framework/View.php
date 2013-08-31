@@ -42,10 +42,19 @@ class View extends ZENObject {
         switch (func_num_args()) {
             case 2:
                 $args = func_get_args();
-                $this->vars['templateVariables'][$args[0]] = $args[1];
+                if (is_object($args[1]) && get_class($args[1]) == 'Model') {
+                    $properties = get_object_vars($args[1]);
+                    if (isset($properties['vars']))
+                        foreach ($properties['vars'] as $key => $value)
+                        	$this->assign("{$args[0]}.{$key}", $value);
+                } else {
+                    $this->vars['templateVariables'][$args[0]] = $args[1];
+                }
                 break;
             case 1:
                 $args = func_get_arg(0);
+                if (is_object($args))
+                    $this->assign(get_class($args), $args);
                 if (is_array($args))
                 	foreach ($args as $key => $value)
                         $this->vars['templateVariables'][$key] = $value;
