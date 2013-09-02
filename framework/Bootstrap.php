@@ -52,7 +52,9 @@ if ($spotlight) {
     $instance->{$router->method}();
     
     // Render template for method in class
-    $instance->view->render();
+    
+    if ($instance->view->templates)
+        $instance->view->render();
 }
     
 ?>
