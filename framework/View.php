@@ -1,6 +1,8 @@
 <?php
 class View extends ZENObject {
 
+    protected $cache = false;
+
     function __construct() {
         $this->vars = null;
     }
@@ -66,6 +68,7 @@ class View extends ZENObject {
     
     function display($template, $placeholder = 'BODY') {
         $templateFile = current(Spotlight::find($template, $this->templateDirectory));
+        $this->vars['templates'][] = $template;
         $this->vars['themeVariables'][$placeholder] = $this->parse($templateFile['fullpath'], $placeholder);
     }
     
@@ -87,7 +90,6 @@ class View extends ZENObject {
         
         if ( ! $this->displayPlaceholders )
         	$output = $this->clean($this->getPlaceholders($output), $output);
-        
         echo $output;
     }
     

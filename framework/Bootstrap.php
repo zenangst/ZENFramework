@@ -2,6 +2,10 @@
 if (!defined('PATH'))
     die('You need to define a PATH for your root directory');
 
+if (file_exists(PATH.'/config.php')) {
+	include PATH.'/config.php';
+}
+
 define('DEFAULT_CONTROLLER', 'Main');
 define('DEFAULT_METHOD', 'main');
 
@@ -33,9 +37,9 @@ if (!$spotlight) {
 if ($spotlight) {
     // Get paths for controller via Spotlight
     $controller = current($spotlight);
+    
 	if (!class_exists($controller['filename']))
     	include $controller['fullpath'];
-
     // Create new controller instance
     $instance = new $controller['filename']($router->arguments);
     if (!method_exists($instance, $router->method))
