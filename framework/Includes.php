@@ -1,4 +1,5 @@
 <?php
+if (!class_exists('ZENObject'))
 include 'ZENObject.php';
 foreach (glob(dirname(__FILE__).'/*.php') as $pathname)
     if (!in_array(pathinfo($pathname, PATHINFO_BASENAME),

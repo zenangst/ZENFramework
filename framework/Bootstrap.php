@@ -2,10 +2,6 @@
 if (!defined('PATH'))
     die('You need to define a PATH for your root directory');
 
-if (file_exists(PATH.'/config.php')) {
-	include PATH.'/config.php';
-}
-
 define('DEFAULT_CONTROLLER', 'Main');
 define('DEFAULT_METHOD', 'main');
 

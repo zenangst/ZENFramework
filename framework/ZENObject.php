@@ -5,8 +5,17 @@ class ZENObject {
 	protected $observers = null;
 	
 	public function __construct($className = null) {
-	    if (!$className)
+	    if ($className)
 		$this->__className = $className;
+	}
+	
+	public function property($name) {
+    	if (property_exists($this, $name))
+    	    return $this->$name;
+	}
+	
+	public function setProperty($key, $value) {
+		$this->$key = $value;
 	}
 	
 	public function __get($name) {

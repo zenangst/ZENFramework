@@ -1,4 +1,6 @@
 <?php
-class Model extends ZENObject {
-    
+if (class_exists('Configuration')) {
+    class Model extends Configuration {}
+} else {
+    class Model extends ZENObject {}
 }
