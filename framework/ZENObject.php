@@ -1,7 +1,7 @@
 <?php 
 class ZENObject {
 	
-	protected $vars = null;
+	protected $variables = null;
 	protected $observers = null;
 	
 	public function __construct($className = null) {
@@ -10,11 +10,11 @@ class ZENObject {
 	}
 	
 	public function __get($name) {
-	    return (isset($this->vars[$name])) ? $this->vars[$name] : null;
+	    return (isset($this->variables[$name])) ? $this->variables[$name] : null;
 	}
 	
 	public function __set($name, $value) {
-		$this->vars[$name] = $value;
+		$this->variables[$name] = $value;
 		// Set observer value
 		if (isset($this->observers[$name]['closure']))
     		$this->observers[$name]['closure'](
@@ -24,16 +24,7 @@ class ZENObject {
             );
 	}
 	
-	public function property($name) {
-    	if (property_exists($this, $name))
-    	    return $this->$name;
-	}
-	
-	public function setProperty($key, $value) {
-		$this->$key = $value;
-	}
-	
-	public function __toString() {
+    public function __toString() {
     	$description = ($this->__className) ? $this->__className : get_class($this);
     	$description = 'class ' . $description;
     	$description .= print_r((array)$this, true);
@@ -41,9 +32,20 @@ class ZENObject {
 	    $description = preg_replace('/array/i', '', $description);
 		return $description;
 	}
+	
+	public function copy($object) {
+	    $properties = (array)$object;
+	    foreach ($properties as $key => $value) {
+	    	$this->$key = $value;
+	    }
+	}
 
     public function description() {
         return $this;
+    }
+    
+    public function asArray() {
+    	return (array)$this;
     }
     
     public function addObserver($observer, $keypath, $closure = null) {
